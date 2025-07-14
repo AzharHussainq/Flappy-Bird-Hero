@@ -13,17 +13,17 @@ let lift = -4;      // Slower jump
 let birdVelocity = 0;
 let score = 0;
 let pipes = [];
-let pipeWidth = 40;  // Default pipe width (kept as original)
-let pipeGap = 150;   // Increased gap between pipes for easier gameplay
-let pipeSpeed = 2;   // Original pipe speed for normal movement
+let pipeWidth = 40;  // Default pipe width
+let pipeGap = 150;   // Increased gap for easier gameplay
+let pipeSpeed = 2;
 let isGameOver = false;
 
 let jumpSound = new Audio('jump.mp3');
 let gameOverSound = new Audio('gameover.mp3');
 let pointSound = new Audio('point.mp3');
 let backgroundMusic = new Audio('background.mp3');
-backgroundMusic.loop = true;  // Loop the background music
-backgroundMusic.volume = 0.2;  // Lower volume for background music
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.2;
 
 function createPipe() {
   const topHeight = Math.random() * (canvas.height / 2);
@@ -33,16 +33,15 @@ function createPipe() {
 
 function drawPipes() {
   pipes.forEach((pipe, index) => {
-    pipe.x -= pipeSpeed; // Move pipes to the left
+    pipe.x -= pipeSpeed;
 
-    // Draw top pipe with straight edges
+    // Draw top pipe
     ctx.fillStyle = 'green';
     ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
 
-    // Draw bottom pipe with straight edges
+    // Draw bottom pipe
     ctx.fillRect(pipe.x, canvas.height - pipe.bottomHeight, pipeWidth, pipe.bottomHeight);
 
-    // Remove pipe if it's off-screen
     if (pipe.x + pipeWidth < 0) {
       pipes.splice(index, 1);
       score++;
@@ -62,7 +61,7 @@ function drawPipes() {
 }
 
 function drawBird() {
-  ctx.drawImage(birdImage, birdX - 20, birdY - 20, 40, 40); // Draw custom bird image
+  ctx.drawImage(birdImage, birdX - 20, birdY - 20, 40, 40);
 }
 
 function gameOver() {
@@ -72,6 +71,11 @@ function gameOver() {
   document.getElementById('game-over').style.display = 'block';
   document.getElementById('restart-btn').style.display = 'block';
   cancelAnimationFrame(animationId);
+
+  // ✅ Trigger popup ad on game over
+  if (typeof onGameOver === 'function') {
+    onGameOver();
+  }
 }
 
 function restartGame() {
@@ -92,12 +96,12 @@ function animate() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  birdVelocity += gravity; // Apply gravity
-  birdY += birdVelocity; // Update bird position
+  birdVelocity += gravity;
+  birdY += birdVelocity;
   drawBird();
   drawPipes();
 
-  if (frames % 90 === 0) createPipe(); // Pipes appear every 90 frames
+  if (frames % 90 === 0) createPipe();
   frames++;
 
   animationId = requestAnimationFrame(animate);
@@ -108,15 +112,15 @@ let animationId;
 backgroundMusic.play();
 animate();
 
-// Control bird
+// Control bird with keyboard and mouse
 document.addEventListener('keydown', function (e) {
   if (e.key === ' ') {
-    birdVelocity = lift; // Make the bird jump when space is pressed
+    birdVelocity = lift;
     jumpSound.play();
   }
 });
 
 document.addEventListener('click', function () {
-  birdVelocity = lift; // Make the bird jump when clicked
+  birdVelocity = lift;
   jumpSound.play();
 });

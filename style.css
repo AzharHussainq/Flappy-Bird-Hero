@@ -1,3 +1,4 @@
+/* ✅ Original Styling */
 * {
   margin: 0;
   padding: 0;
@@ -44,21 +45,66 @@ body {
   color: red;
   text-align: center;
   margin-top: 10px;
-  display: none; /* Initially hidden */
+  display: none;
 }
 
 #restart-btn {
   font-size: 18px;
   padding: 8px 15px;
-  background-color: #f39c12; /* Orange button */
+  background-color: #f39c12;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 5px;
-  display: none; /* Initially hidden */
+  display: none;
 }
 
 #restart-btn:hover {
-  background-color: #e67e22; /* Darker orange */
+  background-color: #e67e22;
+}
+
+/* ✅ Additional Styling for Ads */
+
+/* Top and Bottom Banner Ad */
+#ad-top-banner,
+#ad-bottom-banner {
+  width: 100%;
+  max-width: 728px;
+  height: auto;
+  margin: 10px auto;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Native Ad at Game Start */
+#native-start-ad {
+  width: 100%;
+  max-width: 728px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+/* Side Floating Ad (only shown on desktop) */
+#ad-floating-side {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  #ad-floating-side {
+    display: block;
+    position: fixed;
+    right: 10px;
+    top: 30%;
+    width: 120px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 8px;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
 }

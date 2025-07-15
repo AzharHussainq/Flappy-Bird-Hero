@@ -1,20 +1,20 @@
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = 320;
-canvas.height = 480;
+canvas.height = 440;
 
 const birdImage = new Image();
-birdImage.src = 'bird.png'; // Path to custom bird image
+birdImage.src = 'bird.png';
 
 let birdY = canvas.height / 2;
 let birdX = 50;
-let gravity = 0.1;  // Slower gravity for gentle falling
-let lift = -4;      // Slower jump
+let gravity = 0.1;
+let lift = -4;
 let birdVelocity = 0;
 let score = 0;
 let pipes = [];
-let pipeWidth = 40;  // Default pipe width
-let pipeGap = 150;   // Increased gap for easier gameplay
+let pipeWidth = 40;
+let pipeGap = 150;
 let pipeSpeed = 2;
 let isGameOver = false;
 
@@ -35,11 +35,8 @@ function drawPipes() {
   pipes.forEach((pipe, index) => {
     pipe.x -= pipeSpeed;
 
-    // Draw top pipe
     ctx.fillStyle = 'green';
     ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
-
-    // Draw bottom pipe
     ctx.fillRect(pipe.x, canvas.height - pipe.bottomHeight, pipeWidth, pipe.bottomHeight);
 
     if (pipe.x + pipeWidth < 0) {
@@ -49,7 +46,6 @@ function drawPipes() {
       pointSound.play();
     }
 
-    // Collision detection
     if (
       (birdX + 20 > pipe.x && birdX < pipe.x + pipeWidth &&
         (birdY < pipe.topHeight || birdY > canvas.height - pipe.bottomHeight)) ||
@@ -71,11 +67,6 @@ function gameOver() {
   document.getElementById('game-over').style.display = 'block';
   document.getElementById('restart-btn').style.display = 'block';
   cancelAnimationFrame(animationId);
-
-  // ✅ Trigger popup ad on game over
-  if (typeof onGameOver === 'function') {
-    onGameOver();
-  }
 }
 
 function restartGame() {
@@ -112,7 +103,6 @@ let animationId;
 backgroundMusic.play();
 animate();
 
-// Control bird with keyboard and mouse
 document.addEventListener('keydown', function (e) {
   if (e.key === ' ') {
     birdVelocity = lift;
